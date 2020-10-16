@@ -1,0 +1,18 @@
+<div class="haikei">
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div><mat-card class="panel">{{panel1}}</mat-card></div>  
+    <div><mat-card class="panel" >{{panel10}}</mat-card></div>  
+    <!-- [(ngModel)]="panel10" -->
+  </div>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div><button mat-raised-button class="startbtn" (click)="staBtn()">{{btnName}}</button></div>
+    <div><button mat-raised-button (click)="delBtn()" class="btn">CLEAR</button></div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div *ngFor="let targeter of winningNumber">
+    <div><mat-card class="renderBingo" id="result">{{winningNumber}}</mat-card></div>
+    </div>
+  </div>
+</div>
+
