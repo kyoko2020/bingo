@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-const MAX_NUMBER = 25;
+const MAX_NUMBER = 75;
 
 @Component({
   selector: 'app-home',
@@ -21,16 +21,8 @@ export class HomeComponent implements OnInit {
    panel10: string;
    timerId = null;
    isPush: boolean;
-
-  //  constructor(){
-  //    this.targetNumber = [];
-  //    this.winningNumber = [];
-  //    this.targetIndex = undefined;
-  //    this.panel1 = '0';
-  //    this.panel10 = '0';
-  // // param: Partial<HomeComponent> = {}
-  // //    Object.assign(this, param);
-  //  }
+   shineFlg: boolean;
+  //  shineNumbers: string[] = new Array();
 
   ngOnInit(): void {
 
@@ -38,6 +30,7 @@ export class HomeComponent implements OnInit {
 
   for (let i = 0; i < MAX_NUMBER ; i++) {
     this.targetNumber.push(('00' + (1 + i)).slice(-2));
+    // this.shineNumbers.push(('00' + (1 + i)).slice(-2));
   }
   this.panel1 = '0';
   this.panel10 = '0';
@@ -57,12 +50,17 @@ export class HomeComponent implements OnInit {
 
         // ランダムで選択された数字targetIndexをtargetNumber配列から選定
         this.delArrayNum = this.targetNumber.indexOf(this.targetIndex);
+
         this.isStartFlg = false;
         return;
       }, 10);
     }else{
       if (this.targetNumber != null){
         this.winningNumber.push(this.targetIndex);
+        // // 光らせる配列の要素を取ってきてフラグをたてる
+        // if (this.shineNumbers[this.delArrayNum] != null){
+        //   this.shineNumbers[this.delArrayNum] = this.shineFlg = true;
+        // }
         this.isPush = false;
       }
       console.log(this.winningNumber);
@@ -87,9 +85,11 @@ export class HomeComponent implements OnInit {
       this.isPush = true;
       return;
     }
+
   }
 
   delBtn(): void{
+
     const display = confirm('抽選結果をすべてクリアします。よろしいですか?'); // 警告ダイアログを表示
     if (display){
       // 削除成功,データを消す
@@ -105,6 +105,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // mat-cardの初期表示
   inItSet(): void{
     clearInterval(this.timerId);
     this.panel1 = '0';

@@ -32,18 +32,20 @@
 }
 
 .renderBingo{
-  background-color: #93b5e1;
-  color: #ffffff;
-  word-wrap:break-word;
+  background-color: #ffffff;
+  color: #93b5e1;
   margin: 10px;
-  // flex-wrap: wrap;
-  // align-self: flex-start;
+  // opacity: 0.5;
+  // border-radius: 2.5px;
+  // font-weight: bold;
+  // font-size: 20px;
+  // line-height: 32px;
+}
+.renderBingo + .renderBingo {
+  margin-left: 5px;
+}
+.renderBingo.unmatched {
+  opacity: 1.0;
+  background: #FFFF00 ;
 }
 
-// .box {
-//   height:150px;
-//   width: 90%
-// }
-// .box>* {
-//   flex: 1 1 160px;
-// }
