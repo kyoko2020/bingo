@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+const MAX_NUMBER = 25;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,32 +13,38 @@ export class HomeComponent implements OnInit {
 
    // tslint:disable-next-line: no-inferrable-types
    delArrayNum: number = 0;
-   targetNumber: string[] = new Array();
+   targetNumber: string[] = new Array() ;
    winningNumber: string[] = new Array();
+   targetIndex: string;
    isStartFlg: boolean;
    panel1: string;
    panel10: string;
    timerId = null;
-   targetIndex: string;
    isPush: boolean;
+
+  //  constructor(){
+  //    this.targetNumber = [];
+  //    this.winningNumber = [];
+  //    this.targetIndex = undefined;
+  //    this.panel1 = '0';
+  //    this.panel10 = '0';
+  // // param: Partial<HomeComponent> = {}
+  // //    Object.assign(this, param);
+  //  }
 
   ngOnInit(): void {
 
     // 1-75を配列に追加
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < MAX_NUMBER ; i++) {
     this.targetNumber.push(('00' + (1 + i)).slice(-2));
   }
-
   this.panel1 = '0';
   this.panel10 = '0';
-
   this.isStartFlg =  true;
   }
 
   staBtn(): void{
-
-    // todo 最後一つだけだと回らない
 
     if (this.isStartFlg){
       this.timerId = setInterval( () => {
@@ -67,11 +75,7 @@ export class HomeComponent implements OnInit {
         console.log(this.targetNumber);
 
       }
-
       clearInterval(this.timerId);
-      // let targetIndex = this.targetNumber.indexOf(Number(targetIndex));
-      // this.targetNumber.splice(this.targetIndex, 1);
-
       this.isStartFlg = true;
       return;
     }
@@ -79,7 +83,7 @@ export class HomeComponent implements OnInit {
     // 数字がなくなったら発表を終わる
     if (this.targetNumber.length === 0){
       alert('すべての番号の発表が終わりました') ;
-      this.winningNumber = [];
+      this.inItSet();
       this.isPush = true;
       return;
     }
@@ -90,15 +94,23 @@ export class HomeComponent implements OnInit {
     if (display){
       // 削除成功,データを消す
       // todo 数字が回っている時
+      this.inItSet();
       this.winningNumber = [];
-      this.panel1 = '0';
-      this.panel10 = '0';
-
+      this.targetNumber = [];
+      this.ngOnInit();
+      this.isPush = false;
     }else{
       // 削除キャンセル
       window.alert('キャンセルされました');
     }
   }
+
+  inItSet(): void{
+    clearInterval(this.timerId);
+    this.panel1 = '0';
+    this.panel10 = '0';
+  }
+
 }
 
 
