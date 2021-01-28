@@ -1,3 +1,5 @@
+import { identifierModuleUrl } from '@angular/compiler';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 import { Component, OnInit } from '@angular/core';
 
 const MAX_NUMBER = 75;
@@ -15,22 +17,23 @@ export class HomeComponent implements OnInit {
    delArrayNum: number = 0;
    targetNumber: string[] = new Array() ;
    winningNumber: string[] = new Array();
+  numberPush: {key: string, value: boolean}[] = [];
    targetIndex: string;
    isStartFlg: boolean;
    panel1: string;
    panel10: string;
    timerId = null;
    isPush: boolean;
-   shineFlg: boolean;
-  //  shineNumbers: string[] = new Array();
+   targeter: number ;
 
   ngOnInit(): void {
 
     // 1-75を配列に追加
-
   for (let i = 0; i < MAX_NUMBER ; i++) {
     this.targetNumber.push(('00' + (1 + i)).slice(-2));
-    // this.shineNumbers.push(('00' + (1 + i)).slice(-2));
+    // key:01-75,value:true or false を入れる
+    this.numberPush.push({key: ('00' + (1 + i)).slice(-2), value: false});
+    console.log(this.numberPush);
   }
   this.panel1 = '0';
   this.panel10 = '0';
@@ -50,17 +53,20 @@ export class HomeComponent implements OnInit {
 
         // ランダムで選択された数字targetIndexをtargetNumber配列から選定
         this.delArrayNum = this.targetNumber.indexOf(this.targetIndex);
-
         this.isStartFlg = false;
         return;
       }, 10);
     }else{
       if (this.targetNumber != null){
+        // 履歴用数字をwinningNumberにストック
         this.winningNumber.push(this.targetIndex);
-        // // 光らせる配列の要素を取ってきてフラグをたてる
-        // if (this.shineNumbers[this.delArrayNum] != null){
-        //   this.shineNumbers[this.delArrayNum] = this.shineFlg = true;
-        // }
+
+        // 光らせる配列の要素を取ってきてフラグをたてる
+        this.numberPush.forEach(item => {
+          if (item.key.toString() === this.targetIndex){
+            item.value = true;
+          }
+        });
         this.isPush = false;
       }
       console.log(this.winningNumber);
@@ -97,6 +103,7 @@ export class HomeComponent implements OnInit {
       this.inItSet();
       this.winningNumber = [];
       this.targetNumber = [];
+      this.numberPush = [];
       this.ngOnInit();
       this.isPush = false;
     }else{
@@ -112,7 +119,10 @@ export class HomeComponent implements OnInit {
     this.panel10 = '0';
   }
 
+
 }
+
+
 
 
 
